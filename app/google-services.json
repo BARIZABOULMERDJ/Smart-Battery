@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "223945610324",
+    "firebase_url": "https://smartbattery-e0375.firebaseio.com",
+    "project_id": "smartbattery-e0375",
+    "storage_bucket": "smartbattery-e0375.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:223945610324:android:26f00d2eb767fc39",
+        "android_client_info": {
+          "package_name": "com.yukaiwen.smartbattery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "223945610324-v2ducusipsji8eomj8a2ld67rmvr5db3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB77zfqgPtEAKDV8cHrcPg47N3Z4pOdbw0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
