@@ -39,7 +39,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
                 .build();
 
         // load the MainFragment
-        MainFragment mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.container_main);
+        mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.container_main);
         // if the mainFragment doesn't exist, create an instance of mainFragment
         if(mainFragment == null) {
             mainFragment = MainFragment.newInstance();
@@ -81,7 +81,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
     @Override
     public void onLocationChanged(Location location) {
         Log.v("DONKEY", "Long: " + location.getLongitude() + "Lat: " + location.getLatitude());
-        mainFragment.setUserMarker(new LatLng(location.getLongitude(), location.getLatitude()));
+        mainFragment.setUserMarker(new LatLng(location.getLongitude(), location.getLatitude())); //show the user's current location
     }
 
     /**
@@ -103,6 +103,13 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
         super.onStop();
     }
 
+    /**
+     * In response to the first condition of onConnected(),
+     * when the permission isn't given, a prompt will pop up to ask the permission.
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

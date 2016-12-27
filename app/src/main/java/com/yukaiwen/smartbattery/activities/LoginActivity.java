@@ -290,7 +290,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 } else {
                                     Toast.makeText(LoginActivity.this, "Successfully Authenticated",
                                             Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getBaseContext(), MapsActivity.class);
+                                    Intent intent = new Intent(getBaseContext(), ChooseActivity.class);
                                     startActivity(intent);
                                 }
                             }

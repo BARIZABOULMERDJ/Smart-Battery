@@ -78,6 +78,7 @@ public class MainFragment extends Fragment implements OnMapReadyCallback {
                     .commit();
         }
 
+        //show list corresponding the zipcode entered by user
         final EditText zipText = (EditText)view.findViewById(R.id.zip_text);
         zipText.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -91,6 +92,7 @@ public class MainFragment extends Fragment implements OnMapReadyCallback {
                     imm.hideSoftInputFromWindow(zipText.getWindowToken(), 0); //hiding the soft keyboard
 
                     showList(); //whenever the user enter the zip code, show the list of locations
+
                     updateMapForZip(zip);
 
                     return true;
@@ -128,6 +130,7 @@ public class MainFragment extends Fragment implements OnMapReadyCallback {
      * @param latLng
      */
     public void setUserMarker(LatLng latLng) {
+        //if it is the first time
         if (userMarker == null) {
             userMarker = new MarkerOptions().position(latLng).title("Current Location");
             mMap.addMarker(userMarker);
@@ -150,9 +153,13 @@ public class MainFragment extends Fragment implements OnMapReadyCallback {
         }
 
         updateMapForZip(92284);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
     }
 
+    /**
+     * Converting GPS to zipcode
+     * @param zipcode
+     */
     private void updateMapForZip(int zipcode) {
         //pretending to download the locations from the internet
         ArrayList<OneSpecificLocation> locations = DataService.getInstance().getBootcampLocationsWithin10MilesOfZip(zipcode);

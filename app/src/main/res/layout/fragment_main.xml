@@ -33,7 +33,8 @@
                     android:id="@+id/zip_text"
                     android:layout_width="250dp"
                     android:layout_height="40dp"
-                    android:hint="@string/Search_Google_Maps"/>
+                    android:hint="@string/Search_Google_Maps"
+                    android:inputType="number"/>
                 <ImageButton
                     android:layout_width="35dp"
                     android:layout_height="35dp"
