@@ -49,6 +49,10 @@
         <activity
             android:name=".activities.ChooseActivity"
             android:label="@string/title_activity_choose"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.CapteurDisplayerActivity"
+            android:label="@string/title_activity_capteur_displayer"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
