@@ -16,6 +16,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.yukaiwen.smartbattery.R;
+import com.yukaiwen.smartbattery.adapters.CapteursAdapter;
+import com.yukaiwen.smartbattery.model.OneCapteur;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,9 +28,10 @@ public class CapteurDisplayerActivity extends AppCompatActivity {
     private SensorManager sensorManager;
     private List<Sensor> sensors;
     private List<float[]> latestSensorEvents = new ArrayList<float[]>();
+    private ArrayList<OneCapteur> arrayOfCapteurs;
     private SensorEventListener sensorListener;
     private ListView sensorListView;
-    private ArrayAdapter<float[]> arrayAdapter;
+    private CapteursAdapter capteursAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,32 +53,28 @@ public class CapteurDisplayerActivity extends AppCompatActivity {
             public void onAccuracyChanged(Sensor sensor, int accuracy) {}
         };
 
+        // Construct the data source
+        arrayOfCapteurs = new ArrayList<OneCapteur>();
+        for (int i = 0; i < sensors.size(); i++) {
+            arrayOfCapteurs.add(new OneCapteur(sensors.get(i).getName(), latestSensorEvents.get(i)));
+        }
+
+        // Create the adapter to convert the array to views
+        capteursAdapter = new CapteursAdapter(this, arrayOfCapteurs);
         // We create a list view displaying all the sensor data
         // Data for a sensor is put as a float array into an array list
         sensorListView = new ListView(this);
-        arrayAdapter = new ArrayAdapter<float[]>(this, android.R.layout.simple_list_item_1, latestSensorEvents)
-        {
-            @Override public View getView(int position, View convertView, ViewGroup parent)
-            {
-                TextView tv = (TextView)convertView;
-                if (tv == null) tv = new TextView(CapteurDisplayerActivity.this);
-                float[] values = getItem(position);
-                String message = sensors.get(position).getName() + ":\n"
-                        + ((values == null)?"no data available": Arrays.toString(values));
-                tv.setText(message);
-                return tv;
-            }
-        };
-
+        // Attach the adapter to a ListView
         sensorListView = (ListView) findViewById(R.id.mobile_list);
-        sensorListView.setAdapter(arrayAdapter);
+        sensorListView.setAdapter(capteursAdapter);
 
     }
 
     public void updateSensorValue(SensorEvent sensorEvent)
     {
-        latestSensorEvents.set(sensors.indexOf(sensorEvent.sensor), Arrays.copyOf(sensorEvent.values, sensorEvent.values.length));
-        arrayAdapter.notifyDataSetChanged();
+//        latestSensorEvents.set(sensors.indexOf(sensorEvent.sensor), Arrays.copyOf(sensorEvent.values, sensorEvent.values.length));
+        arrayOfCapteurs.get(sensors.indexOf(sensorEvent.sensor)).setValues(Arrays.copyOf(sensorEvent.values, sensorEvent.values.length));
+        capteursAdapter.notifyDataSetChanged();
     }
 
     @Override
