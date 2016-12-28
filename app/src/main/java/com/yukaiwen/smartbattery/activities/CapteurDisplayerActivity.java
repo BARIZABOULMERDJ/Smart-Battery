@@ -5,16 +5,15 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.yukaiwen.smartbattery.R;
 import com.yukaiwen.smartbattery.adapters.CapteursAdapter;
 import com.yukaiwen.smartbattery.model.OneCapteur;
@@ -32,6 +31,10 @@ public class CapteurDisplayerActivity extends AppCompatActivity {
     private SensorEventListener sensorListener;
     private ListView sensorListView;
     private CapteursAdapter capteursAdapter;
+
+    // [START declare_database_ref]
+    private DatabaseReference mDatabase;
+    // [END declare_database_ref]
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +71,35 @@ public class CapteurDisplayerActivity extends AppCompatActivity {
         sensorListView = (ListView) findViewById(R.id.mobile_list);
         sensorListView.setAdapter(capteursAdapter);
 
+
+        Button Register_Capteur_Btn = (Button)findViewById(R.id.Register_Capteur_Btn);
+        Register_Capteur_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // [START initialize_database_ref]
+                mDatabase = FirebaseDatabase.getInstance().getReference();
+                // [END initialize_database_ref]
+
+                // [START write operation]
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                final String userId = user.getUid();
+
+                for (int i = 0; i < arrayOfCapteurs.size(); i++) {
+                    OneCapteur capteur = arrayOfCapteurs.get(i);
+                    mDatabase.child("users").child(userId).child("capteurs").child(i+"").child("sensor_Name").setValue(capteur.getSensorName());
+
+                    float[] values = capteur.getValues();
+                    for(int j = 0; j < values.length; j++) {
+                        mDatabase.child("users").child(userId).child("capteurs").child(i+"").child("sensor_Values").child(j+"").setValue(values[j]);
+                    }
+                }
+                // [END write operation]
+            }
+        });
     }
 
     public void updateSensorValue(SensorEvent sensorEvent)
     {
-//        latestSensorEvents.set(sensors.indexOf(sensorEvent.sensor), Arrays.copyOf(sensorEvent.values, sensorEvent.values.length));
         arrayOfCapteurs.get(sensors.indexOf(sensorEvent.sensor)).setValues(Arrays.copyOf(sensorEvent.values, sensorEvent.values.length));
         capteursAdapter.notifyDataSetChanged();
     }

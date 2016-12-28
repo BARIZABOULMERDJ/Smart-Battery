@@ -16,4 +16,14 @@
 
     <include layout="@layout/content_capteur_displayer" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Register_Capteur_Btn"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="20dp"
+        android:text="Save Data"
+        android:textSize="24sp"
+        android:padding="20dp" />
+
 </android.support.design.widget.CoordinatorLayout>
