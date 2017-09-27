@@ -140,5 +140,4 @@ Version 01
 ## Authors
 
 * **YU Kaiwen** - *Initial work*
-* **SEREE Yann** - *Initial work*
 
