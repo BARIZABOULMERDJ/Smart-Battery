@@ -20,6 +20,5 @@ version 01 for now
 ## Authors
 
 * **YU Kaiwen** - *Initial work*
-* **SEREE Yann** - *Initial work*
 
 
